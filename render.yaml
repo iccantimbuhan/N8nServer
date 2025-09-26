@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: n8n-service
+    env: docker
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESDB_DATABASE
+        value: n8n
+      - key: DB_POSTGRESDB_SCHEMA
+        value: public
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        value: iccantimbuhan
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: I@np0gi951402
+databases:
+  - name: n8n-db
+    plan: starter
