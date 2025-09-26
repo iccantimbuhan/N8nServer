@@ -1,12 +1,21 @@
-import pool from './db.js';
+import express from 'express';
 
-(async () => {
-  try {
-    const res = await pool.query('SELECT NOW()'); // Test query
-    console.log('DB Time:', res.rows[0]);
-    process.exit(0);
-  } catch (err) {
-    console.error('DB Error:', err);
-    process.exit(1);
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Force HTTPS redirect on Render
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
   }
-})();
+  next();
+});
+
+// Example route
+app.get('/', (req, res) => {
+  res.send('Hello! You are on HTTPS 🔒');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
